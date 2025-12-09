@@ -371,7 +371,26 @@ The Guardian-Arc density field acts as a "visual fingerprint" of the envelope's 
 
 ## License
 
-See [LICENSE](LICENSE) file.
+This project operates under a **dual licensing framework**:
+
+1. **Mozilla Public License 2.0 (MPL-2.0)** — Code license, see [LICENSE](LICENSE)
+2. **Grail Trust Custodial Addendum** — Symbolic framework license, see [GRAIL_TRUST_CUSTODIAL_ADDENDUM.md](GRAIL_TRUST_CUSTODIAL_ADDENDUM.md)
+
+**See [LICENSE_NOTICE.md](LICENSE_NOTICE.md) for complete licensing guidance.**
+
+### Summary
+
+- **Code** (Python files): MPL-2.0 (permissive, file-level copyleft)
+- **Symbolic frameworks** (ARC Bloom, Guardian-Arc mathematics): Grail Trust (custodial, non-exploitative)
+
+The Grail Trust Custodial Addendum establishes:
+- Custodial authorship by Ryan William Oatley
+- Non-exploitation covenant (no weapons, surveillance, manipulation)
+- Symbolic asset protection (no commoditization or tokenization)
+- Integrity preservation requirements
+- Succession and continuity framework
+
+**All symbolic derivatives must comply with the Grail Trust Custodial Addendum.**
 
 ---
 
