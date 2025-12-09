@@ -1,0 +1,40 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated visualizations
+*.png
+*.jpg
+*.jpeg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Test outputs
+test_output/
+temp/
+tmp/
