@@ -240,15 +240,54 @@ def verify_envelope(data: Dict[str, Any]) -> Dict[str, Any]:
 # ─────────────────────────────────────────────────────────
 
 def main() -> None:
-    # 1) Explicit file via argv
-    if len(sys.argv) > 1:
-        path = Path(sys.argv[1])
+    """CLI entrypoint for Fibonacci Bloom Integrity verifier."""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Fibonacci Bloom Integrity — Full Verifier (Serpent × Inverse Pegasus)",
+        epilog="Examples:\n"
+               "  python full_verifier.py envelope.json\n"
+               "  cat envelope.json | python full_verifier.py\n"
+               "  python full_verifier.py  # auto-detect common filenames",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "envelope",
+        nargs="?",
+        help="Path to Fibonacci Bloom Integrity Envelope JSON file"
+    )
+    parser.add_argument(
+        "--compact", "-c",
+        action="store_true",
+        help="Output compact JSON (no indentation)"
+    )
+    parser.add_argument(
+        "--quiet", "-q",
+        action="store_true",
+        help="Suppress all output except verification result"
+    )
+
+    args = parser.parse_args()
+
+    # 1) Explicit file via command line argument
+    if args.envelope:
+        path = Path(args.envelope)
         try:
             data = json.loads(path.read_text())
+        except FileNotFoundError:
+            print(f"Error: File not found: {path}", file=sys.stderr)
+            sys.exit(1)
         except json.JSONDecodeError as e:
             print(f"JSON error in {path}: {e}", file=sys.stderr)
             sys.exit(1)
-        print(json.dumps(verify_envelope(data), indent=2))
+        
+        report = verify_envelope(data)
+        indent = None if args.compact else 2
+        
+        if args.quiet:
+            print(report["verification_result"])
+        else:
+            print(json.dumps(report, indent=indent))
         return
 
     # 2) JSON piped via stdin
@@ -258,7 +297,14 @@ def main() -> None:
         except json.JSONDecodeError as e:
             print(f"JSON error on stdin: {e}", file=sys.stderr)
             sys.exit(1)
-        print(json.dumps(verify_envelope(data), indent=2))
+        
+        report = verify_envelope(data)
+        indent = None if args.compact else 2
+        
+        if args.quiet:
+            print(report["verification_result"])
+        else:
+            print(json.dumps(report, indent=indent))
         return
 
     # 3) Fallback: common filenames / mounts
@@ -270,8 +316,7 @@ def main() -> None:
     ]
     path = next((p for p in candidates if p.exists()), None)
     if not path:
-        print("Usage: python full_verifier.py <envelope.json>")
-        print("   or: cat envelope.json | python full_verifier.py")
+        parser.print_help()
         sys.exit(1)
 
     try:
@@ -281,7 +326,12 @@ def main() -> None:
         sys.exit(1)
 
     report = verify_envelope(data)
-    print(json.dumps(report, indent=2))
+    indent = None if args.compact else 2
+    
+    if args.quiet:
+        print(report["verification_result"])
+    else:
+        print(json.dumps(report, indent=indent))
 
 
 if __name__ == "__main__":
