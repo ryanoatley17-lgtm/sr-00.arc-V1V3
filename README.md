@@ -66,11 +66,20 @@ pip install numpy matplotlib
 ### 1. Basic Fibonacci Verification
 
 ```bash
+# Show help
+python full_verifier.py --help
+
 # Verify an envelope (JSON verification output)
 python full_verifier.py envelope.json
 
 # Or via stdin
 cat envelope.json | python full_verifier.py
+
+# Compact output (no indentation)
+python full_verifier.py envelope.json --compact
+
+# Quiet mode (only show PASS/FAIL)
+python full_verifier.py envelope.json --quiet
 ```
 
 ### 2. Guardian-Arc Visualization Only
